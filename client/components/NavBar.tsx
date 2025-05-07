@@ -10,8 +10,9 @@ import { cn } from "@/lib/utils";
 import Tooltip from "./Tooltip";
 import RenderIf from "./RenderIf";
 import { Viewport } from "@/enums";
-import Avatar from "./Avatar";
+import NavBarAvatar from "./NavBarAvatar";
 import { useMobile, useViewport } from "@/hooks";
+import CustomScrollbar from "./CustomScrollbar";
 
 const DELAY_DURATION: number = 300;
 
@@ -21,7 +22,7 @@ const ButtonNavBar = ({ item, active }: { item: NavbarType; active: boolean }) =
       <div>
         <RenderIf value={active}>{item.activeIcon}</RenderIf>
         <RenderIf value={!active}>{item.icon}</RenderIf>
-        <span className={`text-left text-24 ml-3 hidden 2xl:block ${active ? "font-black" : "font-semibold"}`}>
+        <span className={`text-left text-20 ml-3 hidden xl:block ${active ? "font-black" : "font-semibold"}`}>
           {item.title}
         </span>
       </div>
@@ -29,24 +30,22 @@ const ButtonNavBar = ({ item, active }: { item: NavbarType; active: boolean }) =
   );
 };
 
-const NavBar = () => {
-  const { width } = useViewport();
-  const pathname: string = usePathname();
-  const isMobile = useMobile();
+const Nav = ({ props }: { props: { isMobile: boolean; width: number; pathname: string } }) => {
+  const { isMobile, pathname, width } = props;
 
   return (
-    <nav className={`${!isMobile ? "border-r-2" : "border-t-2"} flex flex-col overflow-x-auto`}>
-      <div className="2xl:pr-14 pr-0">
+    <div className={`${!isMobile && "h-screen"} flex flex-col justify-around`}>
+      <div className="xl:pr-10 pr-0">
         <ul
           className={`flex ${
             isMobile ? "flex-row justify-around my-0" : "flex-col my-2"
-          } px-1 md:px-4 2xl:px-0 2xl:w-[300px]`}
+          } px-1 md:px-4 xl:px-0 xl:w-[250px]`}
         >
           {menuitems.map((item: NavbarType, index: number) => (
             <li key={index} className="my-1">
               <div className="flex items-center">
                 <Link href={item.link}>
-                  <RenderIf value={width <= Viewport["2XL"]}>
+                  <RenderIf value={width <= Viewport["XL"]}>
                     <RenderIf value={!isMobile}>
                       <Tooltip content={item.title} side="bottom" delayDuration={DELAY_DURATION}>
                         <ButtonNavBar item={item} active={pathname === item.link} />
@@ -56,7 +55,7 @@ const NavBar = () => {
                       <ButtonNavBar item={item} active={pathname === item.link} />
                     </RenderIf>
                   </RenderIf>
-                  <RenderIf value={width > Viewport["2XL"]}>
+                  <RenderIf value={width > Viewport["XL"]}>
                     <ButtonNavBar item={item} active={pathname === item.link} />
                   </RenderIf>
                 </Link>
@@ -65,19 +64,19 @@ const NavBar = () => {
           ))}
         </ul>
         <RenderIf value={!isMobile}>
-          <div className={`${width > Viewport.MD ? "w-full" : ""} md:px-3 flex justify-center 2xl:px-0`}>
-            <RenderIf value={width >= Viewport["2XL"]}>
+          <div className={`${width > Viewport.MD ? "w-full" : ""} md:px-3 flex justify-center xl:px-0 mb-2`}>
+            <RenderIf value={width >= Viewport["XL"]}>
               <Button asChild size={"full"}>
                 <div>
-                  <span className="text-24 font-black !text-background">Post</span>
+                  <span className="text-20 font-black !text-background">Post</span>
                 </div>
               </Button>
             </RenderIf>
-            <RenderIf value={width < Viewport["2XL"]}>
+            <RenderIf value={width < Viewport["XL"]}>
               <Tooltip content={`Post`} side="bottom" delayDuration={DELAY_DURATION}>
                 <Button asChild size={"full"}>
                   <div>
-                    <CirclePlus className="size-6 md:size-8" />
+                    <CirclePlus className="size-5 md:size-6" />
                   </div>
                 </Button>
               </Tooltip>
@@ -87,12 +86,29 @@ const NavBar = () => {
       </div>
       <RenderIf value={!isMobile}>
         <div
-          className={`${
-            width > Viewport.MD && "pr-3 pl-3"
-          } flex-1 items-end justify-center mb-6 flex 2xl:pr-6 2xl:pl-0 `}
+          className={`${width > Viewport.MD && "pr-3 pl-3"} flex-1 items-end justify-center mb-6 flex xl:pr-6 xl:pl-0`}
         >
-          <Avatar props={{ src: "https://github.com/shadcn.png" }} />
+          <NavBarAvatar props={{ src: "https://github.com/shadcn.png" }} />
         </div>
+      </RenderIf>
+    </div>
+  );
+};
+
+const NavBar = () => {
+  const { width } = useViewport();
+  const pathname: string = usePathname();
+  const isMobile = useMobile();
+
+  return (
+    <nav className={`${isMobile && "border-t-2"}`}>
+      <RenderIf value={!isMobile}>
+        <CustomScrollbar height={window.innerHeight}>
+          <Nav props={{ isMobile, pathname, width }} />
+        </CustomScrollbar>
+      </RenderIf>
+      <RenderIf value={isMobile}>
+        <Nav props={{ isMobile, pathname, width }} />
       </RenderIf>
     </nav>
   );

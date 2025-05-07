@@ -159,15 +159,31 @@ body {
 }
 
 @layer utilities {
-  .text-24 {
-    @apply text-[24px] text-foreground;
+  .text-20 {
+    @apply text-[20px] text-foreground;
   }
 
-  .text-16-bold {
-    @apply text-[16px] text-foreground font-black;
+  .text-14-bold {
+    @apply text-[14px] text-foreground font-black;
   }
 
-  .text-16-semibold {
-    @apply text-[16px] text-foreground/50 font-semibold;
+  .text-14-semibold {
+    @apply text-[14px] text-foreground/50 font-semibold;
+  }
+
+  .text-12-bold {
+    @apply text-[12px] text-foreground font-black;
+  }
+
+  .text-12-semibold {
+    @apply text-[12px] text-foreground/50 font-semibold;
+  }
+
+  .text-10-bold {
+    @apply text-[10px] font-black;
+  }
+
+  .text-10-semibold {
+    @apply text-[10px] font-semibold;
   }
 }

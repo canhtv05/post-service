@@ -1,6 +1,8 @@
+import NextTopLoader from "nextjs-toploader";
+import localFont from "next/font/local";
+
 import type { Metadata } from "next";
 import "./globals.css";
-import localFont from "next/font/local";
 
 const chirpFont = localFont({
   src: [
@@ -41,8 +43,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="light" suppressHydrationWarning>
       <body className={`${chirpFont.variable} antialiased`} suppressHydrationWarning>
+        <NextTopLoader height={2} showSpinner={false} />
         {children}
       </body>
     </html>

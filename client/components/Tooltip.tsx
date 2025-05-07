@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { Tooltip as TooltipContainer, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-
-type Side = "top" | "right" | "bottom" | "left";
+import { Side } from "@/types";
 
 const Tooltip = ({
   arrow = false,
@@ -25,7 +24,7 @@ const Tooltip = ({
       <TooltipContainer delayDuration={delayDuration}>
         <TooltipTrigger className={classNameTrigger}>{children}</TooltipTrigger>
         <TooltipContent arrow={arrow} side={side} color={color}>
-          <p>{content}</p>
+          <span className="text-10-bold">{content}</span>
         </TooltipContent>
       </TooltipContainer>
     </TooltipProvider>

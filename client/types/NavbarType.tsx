@@ -19,7 +19,7 @@ export type NavbarType = {
   activeIcon: ReactNode;
 };
 
-const className = `md:size-8 size-6 stroke-2 text-foreground`;
+const className = `md:size-6 size-5 stroke-2 text-foreground`;
 
 export const menuitems = [
   {
