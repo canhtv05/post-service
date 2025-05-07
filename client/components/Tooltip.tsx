@@ -9,6 +9,7 @@ const Tooltip = ({
   side = "top",
   delayDuration,
   classNameTrigger,
+  color = "bg-secondary",
   children,
 }: {
   arrow?: boolean;
@@ -16,13 +17,14 @@ const Tooltip = ({
   side?: Side;
   delayDuration?: number;
   classNameTrigger?: string;
+  color?: string;
   children: ReactNode;
 }) => {
   return (
     <TooltipProvider>
       <TooltipContainer delayDuration={delayDuration}>
         <TooltipTrigger className={classNameTrigger}>{children}</TooltipTrigger>
-        <TooltipContent arrow={arrow} side={side}>
+        <TooltipContent arrow={arrow} side={side} color={color}>
           <p>{content}</p>
         </TooltipContent>
       </TooltipContainer>

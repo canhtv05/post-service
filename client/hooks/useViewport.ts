@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useViewport = () => {
-  const [width, setWidth] = useState(window.innerWidth);
+  const [width, setWidth] = useState<number>(window.innerWidth);
 
   useEffect(() => {
     const handleWindowResize = () => setWidth(window.innerWidth);
@@ -15,4 +15,4 @@ const useViewport = () => {
   return { width };
 };
 
-export default useViewport;
+export { useViewport };

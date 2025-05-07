@@ -24,7 +24,7 @@ const buttonVariants = cva(
         sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
         lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
         icon: "size-9",
-        full: "w-full py-4 rounded-full 2xl:has-[>svg]:px-6 has-[>svg]:px-4",
+        full: "w-full py-3 md:py-4 rounded-full 2xl:has-[>svg]:px-6 md:has-[>svg]:px-4 has-[>svg]:px-3",
       },
       navbar: {
         default:
