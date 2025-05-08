@@ -5,7 +5,7 @@ import { useViewport } from "@/hooks";
 import RenderIf from "./RenderIf";
 import { Viewport } from "@/enums";
 import Tooltip from "./Tooltip";
-import Avatar from "./Avatar";
+import Account from "./Account";
 
 const DELAY_DURATION: number = 300;
 
@@ -16,7 +16,7 @@ const ButtonAvatar = ({ props }: { props: { width: number; src: string; fallback
     <Button asChild variant={"profile"}>
       <div className="lg:pt-[27px] lg:pb-[27px] xl:py-8 py-6 flex xl:justify-start justify-center items-center">
         <RenderIf value={width >= Viewport["XL"]}>
-          <Avatar props={{ src, alt, fallback, tick: true, creator: true }} />
+          <Account props={{ src, alt, fallback, tick: true, creator: true }} />
           <div className="flex justify-end w-full mr-2">
             <Tooltip content="Logout" delayDuration={DELAY_DURATION} color="bg-foreground" arrow>
               <div className="flex justify-center items-center w-[32px] lg:h-[64px] cursor-pointer">

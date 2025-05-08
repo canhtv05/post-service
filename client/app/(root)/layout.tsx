@@ -8,7 +8,7 @@ import RenderIf from "@/components/RenderIf";
 import Sidebar from "@/components/Sidebar";
 import { Viewport } from "@/enums";
 
-const WIDTH_RESPONSIVE = 940;
+const WIDTH_RESPONSIVE = 1000;
 
 const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
   const { width } = useViewport();
@@ -18,18 +18,18 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
     <div
       className={`${
         isMobile ? "flex-col justify-between" : "flex-row"
-      } font-chirp text-foreground bg-background flex lg:w-[90%] md:w-[95%] w-full mx-auto h-screen`}
+      } font-chirp text-foreground bg-background flex md:w-[95%] w-full mx-auto h-screen`}
     >
       <RenderIf value={isMobile}>
         {children}
         <NavBar />
       </RenderIf>
       <RenderIf value={!isMobile}>
-        <div className="fixed border-r-1">
+        <div className="fixed">
           <NavBar />
         </div>
         <div className={`flex w-full ${width <= Viewport.XL ? "ml-20" : "ml-72"}`}>
-          <div className={`${width >= WIDTH_RESPONSIVE ? "w-[65%]" : "w-full"}`}>
+          <div className={`${width >= 1400 ? "w-[68%]" : width >= WIDTH_RESPONSIVE ? "w-[65%]" : "w-full"}`}>
             <div className="my-2">{children}</div>
           </div>
           <RenderIf value={width >= WIDTH_RESPONSIVE}>

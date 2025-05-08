@@ -163,6 +163,14 @@ body {
     @apply text-[20px] text-foreground;
   }
 
+  .text-16-bold {
+    @apply text-[16px] text-foreground font-black;
+  }
+
+  .text-16-semibold {
+    @apply text-[16px] text-foreground/50 font-semibold;
+  }
+
   .text-14-bold {
     @apply text-[14px] text-foreground font-black;
   }

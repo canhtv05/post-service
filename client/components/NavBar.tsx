@@ -35,7 +35,7 @@ const Nav = ({ props }: { props: { isMobile: boolean; width: number; pathname: s
 
   return (
     <div className={`${!isMobile && "h-screen"} flex flex-col justify-around`}>
-      <div className="xl:pr-10 pr-0">
+      <div className="xl:pr-8 pr-0">
         <ul
           className={`flex ${
             isMobile ? "flex-row justify-around my-0" : "flex-col my-2"

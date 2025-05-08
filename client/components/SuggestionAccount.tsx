@@ -1,8 +1,9 @@
-import React, { MouseEventHandler } from "react";
-import Avatar from "./Avatar";
-import { Button, buttonVariants } from "./ui/button";
+import { MouseEventHandler } from "react";
 import { Check } from "lucide-react";
+import Account from "./Account";
+import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
+import ProfileCard from "./ProfileCard";
 
 const SuggestionAccount = ({
   isFollowing,
@@ -13,7 +14,15 @@ const SuggestionAccount = ({
 }) => {
   return (
     <div className="my-4 flex justify-between items-center">
-      <Avatar props={{ src: "https://github.com/shadcn.png", creator: true }} />
+      <Account
+        props={{
+          src: "https://github.com/shadcn.png",
+          creator: true,
+          tick: true,
+          hasTooltip: true,
+          render: <ProfileCard props={{ isFollowing, onFollow }} />,
+        }}
+      />
       <Button
         asChild
         className={`${
@@ -22,9 +31,9 @@ const SuggestionAccount = ({
         onClick={onFollow}
       >
         <div>
-          <div className={`text-12-bold ${isFollowing ? "text-foreground" : "!text-background"}`}>{`${
-            isFollowing ? "Following" : "Follow"
-          }`}</div>
+          <div
+            className={`2xl:text-[14px] text-[12px] font-black ${isFollowing ? "text-foreground" : "!text-background"}`}
+          >{`${isFollowing ? "Following" : "Follow"}`}</div>
           {isFollowing && <Check className="size-3" />}
         </div>
       </Button>
