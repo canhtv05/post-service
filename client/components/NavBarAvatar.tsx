@@ -1,3 +1,5 @@
+"use client";
+
 import { LogOut } from "lucide-react";
 
 import { Button } from "./ui/button";
@@ -16,7 +18,10 @@ const ButtonAvatar = ({ props }: { props: { width: number; src: string; fallback
     <Button asChild variant={"profile"}>
       <div className="lg:pt-[27px] lg:pb-[27px] xl:py-8 py-6 flex xl:justify-start justify-center items-center">
         <RenderIf value={width >= Viewport["XL"]}>
-          <Account props={{ src, alt, fallback, tick: true, creator: true }} />
+          <Account
+            props={{ src, alt, fallback, tick: true, creator: true, withLink: false }}
+            data={{ username: "rainrain" }}
+          />
           <div className="flex justify-end w-full mr-2">
             <Tooltip content="Logout" delayDuration={DELAY_DURATION} color="bg-foreground" arrow>
               <div className="flex justify-center items-center w-[32px] lg:h-[64px] cursor-pointer">

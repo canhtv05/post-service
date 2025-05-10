@@ -48,15 +48,15 @@ const Nav = ({ props }: { props: { isMobile: boolean; width: number; pathname: s
                   <RenderIf value={width <= Viewport["XL"]}>
                     <RenderIf value={!isMobile}>
                       <Tooltip content={item.title} side="bottom" delayDuration={DELAY_DURATION}>
-                        <ButtonNavBar item={item} active={pathname === item.link} />
+                        <ButtonNavBar item={item} active={pathname.includes(item.link)} />
                       </Tooltip>
                     </RenderIf>
                     <RenderIf value={isMobile}>
-                      <ButtonNavBar item={item} active={pathname === item.link} />
+                      <ButtonNavBar item={item} active={pathname.includes(item.link)} />
                     </RenderIf>
                   </RenderIf>
                   <RenderIf value={width > Viewport["XL"]}>
-                    <ButtonNavBar item={item} active={pathname === item.link} />
+                    <ButtonNavBar item={item} active={pathname.includes(item.link)} />
                   </RenderIf>
                 </Link>
               </div>
@@ -103,7 +103,7 @@ const NavBar = () => {
   return (
     <nav className={`${isMobile && "border-t-2"}`}>
       <RenderIf value={!isMobile}>
-        <CustomScrollbar height={window.innerHeight}>
+        <CustomScrollbar height={1000}>
           <Nav props={{ isMobile, pathname, width }} />
         </CustomScrollbar>
       </RenderIf>

@@ -1,9 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardFooter } from "./ui/card";
+import Account from "./Account";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
-const SearchCard = () => {
+const SearchCard = ({ query }: { query: string }) => {
   return (
     <div className="absolute top-12 z-10 w-full right-0">
       <motion.div
@@ -17,15 +20,32 @@ const SearchCard = () => {
         }}
       >
         <Card className="shadow-lg">
-          <CardHeader className="">
-            <CardTitle>Card Title</CardTitle>
-            <CardDescription>Card Description</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p>Card Content</p>
+          <CardContent className="px-0">
+            {new Array(5).fill(null).map((_, index: number) => (
+              <div className="py-2 hover:bg-primary/10 px-6 transition-colors duration-200 cursor-pointer" key={index}>
+                <Account
+                  props={{
+                    src: "https://github.com/shadcn.png",
+                    creator: true,
+                    tick: true,
+                  }}
+                  data={{
+                    username: "rainrain",
+                  }}
+                />
+              </div>
+            ))}
           </CardContent>
+
           <CardFooter>
-            <p>Card Footer</p>
+            <Button asChild variant="profile">
+              <Link href={`users?query=${query}`}>
+                <span className="text-14-bold flex max-w-full items-center">
+                  See all
+                  <span className="truncate max-w-[140px] overflow-hidden whitespace-nowrap ml-2">{query}</span>
+                </span>
+              </Link>
+            </Button>
           </CardFooter>
         </Card>
       </motion.div>

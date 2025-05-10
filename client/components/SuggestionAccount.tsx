@@ -1,3 +1,5 @@
+"use client";
+
 import { MouseEventHandler } from "react";
 import { Check } from "lucide-react";
 import Account from "./Account";
@@ -19,9 +21,9 @@ const SuggestionAccount = ({
           src: "https://github.com/shadcn.png",
           creator: true,
           tick: true,
-          hasTooltip: true,
           render: <ProfileCard props={{ isFollowing, onFollow }} />,
         }}
+        data={{ username: "rainrain" }}
       />
       <Button
         asChild

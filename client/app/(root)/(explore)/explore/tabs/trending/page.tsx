@@ -1,7 +1,7 @@
 import React from "react";
 
 const Page = () => {
-  return <div>explore</div>;
+  return <div>Trending</div>;
 };
 
 export default Page;

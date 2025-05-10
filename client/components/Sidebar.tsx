@@ -1,24 +1,21 @@
-import { AnimatePresence } from "framer-motion";
-import { ChangeEvent, useState } from "react";
+"use client";
 
-import { Input } from "./ui/input";
-import { SearchIcon } from "@/assets/icons";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+
 import SuggestionAccount from "./SuggestionAccount";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
-import { useClickOutside, useViewport } from "@/hooks";
-import SearchCard from "./SearchCard";
-import { CircleX } from "lucide-react";
+import { useSearchBar, useViewport } from "@/hooks";
+import SearchBar from "./SearchBar";
 import RenderIf from "./RenderIf";
 
 type List = { id: number; isFollowing: boolean }[];
 
 const Sidebar = () => {
+  const pathname: string = usePathname();
   const { width } = useViewport();
-
-  const [query, setQuery] = useState<string>("");
-  const [isShowSearchCard, setIsShowSearchCard] = useState<boolean>(false);
-  const ref = useClickOutside(() => setIsShowSearchCard(false));
+  const searchBarProps = useSearchBar();
 
   const [list, setList] = useState<List>([
     { id: 1, isFollowing: true },
@@ -30,39 +27,13 @@ const Sidebar = () => {
     setList((prev) => prev.map((i) => (i.id === id ? { ...i, isFollowing: !i.isFollowing } : i)));
   };
 
-  const handleSearchCard = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-    setIsShowSearchCard(true);
-  };
-
-  const handleFocus = () => {
-    if (!!!query) return;
-    setIsShowSearchCard(true);
-  };
-
   return (
     <div className="my-2 ml-6 flex-1 w-[35%]">
-      <div className="relative flex items-center border focus-within:ring-1 focus-within:ring-ring pl-2 rounded-full bg-transparent">
-        <div className="flex-shrink-0">
-          <SearchIcon className="size-5 text-muted-foreground" />
-        </div>
-        <Input
-          value={query}
-          defaultValue={query}
-          placeholder="Search..."
-          className="h-[44px] flex-1 rounded-full text-14-bold border-0 focus-visible:ring-0 shadow-none !bg-transparent"
-          onChange={handleSearchCard}
-          ref={ref}
-          onFocus={handleFocus}
-        />
-        <RenderIf value={!!query}>
-          <CircleX className="size-5 text-muted-foreground mr-3 cursor-pointer" onClick={() => setQuery("")} />
-        </RenderIf>
+      <RenderIf value={!!!pathname.includes("/explore")}>
+        <SearchBar {...searchBarProps} />
+      </RenderIf>
 
-        <AnimatePresence>{!!query && isShowSearchCard && <SearchCard key="search-card" />}</AnimatePresence>
-      </div>
-
-      <Card className="bg-background mt-6">
+      <Card className={`bg-background ${!!pathname.includes("/explore") ? "mt-0" : "mt-6"}`}>
         <CardHeader>
           <CardTitle className="xl:text-[20px] text-[16px] font-bold">Suggested accounts</CardTitle>
         </CardHeader>

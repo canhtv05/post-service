@@ -43,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${chirpFont.variable} antialiased`} suppressHydrationWarning>
         <NextTopLoader height={2} showSpinner={false} />
         {children}

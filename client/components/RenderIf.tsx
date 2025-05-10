@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode } from "react";
 
 const RenderIf = ({ value, children }: { value: boolean; children: ReactNode }) => {

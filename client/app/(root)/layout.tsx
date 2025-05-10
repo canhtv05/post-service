@@ -1,18 +1,47 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 import NavBar from "@/components/NavBar";
 import { useMobile, useViewport } from "@/hooks";
 import RenderIf from "@/components/RenderIf";
 import Sidebar from "@/components/Sidebar";
 import { Viewport } from "@/enums";
-
-const WIDTH_RESPONSIVE = 1000;
+import { WIDTH_RESPONSIVE } from "@/constants";
 
 const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
   const { width } = useViewport();
   const isMobile = useMobile();
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen font-chirp text-lg">
+        <motion.div
+          animate={{
+            rotate: [0, 10, -10, 10, 0],
+          }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+          }}
+        >
+          <Image src="/imgs/logo.png" width={100} height={100} alt="logo" className="rounded-2xl" />
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div

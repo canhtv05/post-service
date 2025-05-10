@@ -1,3 +1,5 @@
+"use client";
+
 import { Fragment, MouseEventHandler } from "react";
 import { Check } from "lucide-react";
 import Link from "next/link";
@@ -50,7 +52,7 @@ const ProfileCard = ({
       <div className="flex flex-col justify-center">
         <Link href={``}>
           <h3 className="text-14-bold font-black mt-2 line-clamp-1 hover:underline">Rain Rain</h3>
-          <span className="text-14-semibold font-semibold line-clamp-1">@RainRain</span>
+          <span className="text-14-semibold font-semibold line-clamp-1">@rainrain</span>
         </Link>
       </div>
       <p className="text-[14px] mt-2 line-clamp-3">
