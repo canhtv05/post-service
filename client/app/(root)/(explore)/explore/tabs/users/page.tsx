@@ -1,13 +1,26 @@
+"use client";
+
 import UserCard from "@/components/UserCard";
-import React, { Fragment } from "react";
 
 const Users = () => {
   return (
-    <Fragment>
+    <div className="pt-5">
       {new Array(5).fill(null).map((_, index: number) => (
-        <UserCard key={index} />
+        <UserCard
+          key={index}
+          props={{
+            src: "https://github.com/shadcn.png",
+            username: "rainraisqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan",
+            tick: true,
+            creator: true,
+            followers: 1000,
+            bio: "No thingNo thingNo thingNo thingNo thingNo thingNo thingNo thing No thingNo thingNo thingNo thingNo thingNo thingNo thingNo thing",
+            firstName: "Rainwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+            lastName: "Rain",
+          }}
+        />
       ))}
-    </Fragment>
+    </div>
   );
 };
 

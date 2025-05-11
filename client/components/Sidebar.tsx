@@ -28,7 +28,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="my-2 ml-6 flex-1 w-[35%]">
+    <div className="my-2 ml-6 flex-1 w-full">
       <RenderIf value={!!!pathname.includes("/explore")}>
         <SearchBar {...searchBarProps} />
       </RenderIf>

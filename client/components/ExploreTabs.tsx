@@ -75,7 +75,7 @@ const ExploreTabs = ({ children }: { children: ReactNode }) => {
           </ul>
         </nav>
 
-        <main className="flex-1 flex items-center justify-center text-[128px]">
+        <main className="container">
           <AnimatePresence mode="wait">
             {isLoading ? (
               <Fragment key={selectedTab.label}></Fragment>

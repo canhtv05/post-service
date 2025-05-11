@@ -23,4 +23,17 @@ export type SearchBarProps = {
   isShowSearchCard: boolean;
 };
 
+export type UserCardType = {
+  alt?: string;
+  src: string;
+  fallback?: string;
+  tick?: boolean;
+  creator?: boolean;
+  bio: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  followers: number;
+};
+
 export type Side = "top" | "right" | "bottom" | "left";
