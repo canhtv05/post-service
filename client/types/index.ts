@@ -36,4 +36,13 @@ export type UserCardType = {
   followers: number;
 };
 
+export type NewsCardType = {
+  tick?: boolean;
+  creator?: boolean;
+  firstName: string;
+  lastName: string;
+  content: string;
+  hashtag: string;
+};
+
 export type Side = "top" | "right" | "bottom" | "left";

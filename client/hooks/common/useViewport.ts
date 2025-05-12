@@ -4,21 +4,26 @@ import { useEffect, useState } from "react";
 
 const useViewport = () => {
   const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const handleWindowResize = () => setWidth(window.innerWidth);
+      const handleWindowResizeWidth = () => setWidth(window.innerWidth);
+      const handleWindowResizeHeight = () => setHeight(window.innerHeight);
 
       setWidth(window.innerWidth);
-      window.addEventListener("resize", handleWindowResize);
+      setHeight(window.innerHeight);
+      window.addEventListener("resize", handleWindowResizeWidth);
+      window.addEventListener("resize", handleWindowResizeHeight);
 
       return () => {
-        window.removeEventListener("resize", handleWindowResize);
+        window.removeEventListener("resize", handleWindowResizeWidth);
+        window.removeEventListener("resize", handleWindowResizeHeight);
       };
     }
   }, []);
 
-  return { width };
+  return { width, height };
 };
 
 export { useViewport };

@@ -47,10 +47,11 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
     <div
       className={`${
         isMobile ? "flex-col justify-between" : "flex-row"
-      } font-chirp text-foreground bg-background flex md:w-[95%] w-full mx-auto h-screen`}
+      } font-chirp text-foreground bg-background flex md:w-[95%] w-full mx-auto h-screen relative`}
     >
       <RenderIf value={isMobile}>
         {children}
+        {/* navbar bi children de len */}
         <NavBar />
       </RenderIf>
       <RenderIf value={!isMobile}>
@@ -58,10 +59,10 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
           <NavBar />
         </div>
         <div className={`flex w-full ${width <= Viewport.XL ? "ml-20" : "ml-72"}`}>
-          <div className={`${width >= 1400 ? "w-[68%]" : width >= WIDTH_RESPONSIVE ? "w-[65%]" : "w-full"}`}>
+          <div className={`${width >= 1400 ? "w-[68%]" : width > WIDTH_RESPONSIVE ? "w-[65%]" : "w-full"}`}>
             <div className="my-2">{children}</div>
           </div>
-          <RenderIf value={width >= WIDTH_RESPONSIVE}>
+          <RenderIf value={width > WIDTH_RESPONSIVE}>
             <Sidebar />
           </RenderIf>
         </div>

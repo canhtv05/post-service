@@ -1,18 +1,22 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import ScrollToTop from "./ScrollToTop";
+import RenderIf from "./RenderIf";
 
 interface CustomScrollbarProps {
   children: React.ReactNode;
   height?: number | string;
+  scrollToTop?: boolean;
 }
 
-const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ children, height = 400 }) => {
+const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ children, scrollToTop = true, height = 400 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
 
   const [visible, setVisible] = useState(false);
+  const [showButton, setShowButton] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
   const [startScrollTop, setStartScrollTop] = useState(0);
@@ -42,6 +46,10 @@ const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ children, height = 40
     updateThumbPosition();
     setVisible(true);
 
+    const scrollTop = contentRef.current?.scrollTop || 0;
+
+    setShowButton(scrollTop > 100);
+
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
       if (!isDragging) setVisible(false);
@@ -70,17 +78,64 @@ const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ children, height = 40
     }
   };
 
+  const handleKeyDown = (e: KeyboardEvent) => {
+    const content = contentRef.current;
+    if (!content) return;
+
+    const step = 30;
+    const pageStep = content.clientHeight;
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        content.scrollTop += step;
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        content.scrollTop -= step;
+        break;
+      case "PageDown":
+        e.preventDefault();
+        content.scrollTop += pageStep;
+        break;
+      case "PageUp":
+        e.preventDefault();
+        content.scrollTop -= pageStep;
+        break;
+      case "Home":
+        e.preventDefault();
+        content.scrollTop = 0;
+        break;
+      case "End":
+        e.preventDefault();
+        content.scrollTop = content.scrollHeight;
+        break;
+    }
+  };
+
+  const handleScrollToTop = () => {
+    contentRef.current?.scrollTo({
+      behavior: "smooth",
+      top: 0,
+    });
+  };
+
   useEffect(() => {
+    const content = contentRef.current;
     updateThumbHeight();
     updateThumbPosition();
-    const content = contentRef.current;
-    if (content) content.addEventListener("scroll", handleScroll);
 
+    if (content) {
+      content.addEventListener("scroll", handleScroll);
+      content.setAttribute("tabindex", "0"); // focusable
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseup", handleMouseUp);
 
     return () => {
       if (content) content.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
@@ -89,7 +144,10 @@ const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ children, height = 40
 
   return (
     <div ref={containerRef} className="relative w-full" style={{ height }}>
-      <div ref={contentRef} className="h-full overflow-y-scroll [&::-webkit-scrollbar]:hidden scrollbar-hide">
+      <div
+        ref={contentRef}
+        className="h-full overflow-y-scroll focus:outline-none [&::-webkit-scrollbar]:hidden scrollbar-hide"
+      >
         {children}
       </div>
       <div className="absolute right-0 top-0 w-2 h-full bg-transparent">
@@ -101,6 +159,9 @@ const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ children, height = 40
           onMouseDown={handleMouseDown}
         />
       </div>
+      <RenderIf value={showButton && scrollToTop}>
+        <ScrollToTop visible={visible} onScroll={handleScrollToTop} />
+      </RenderIf>
     </div>
   );
 };

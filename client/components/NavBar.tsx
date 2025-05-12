@@ -34,11 +34,11 @@ const Nav = ({ props }: { props: { isMobile: boolean; width: number; pathname: s
   const { isMobile, pathname, width } = props;
 
   return (
-    <div className={`${!isMobile && "h-screen"} flex flex-col justify-around`}>
+    <div className={`${!isMobile ? "h-screen" : ""} flex flex-col justify-around`}>
       <div className="xl:pr-8 pr-0">
         <ul
           className={`flex ${
-            isMobile ? "flex-row justify-around my-0" : "flex-col my-2"
+            isMobile ? "flex-row justify-around my-0 fixed bottom-0 w-full border-t" : "flex-col my-2"
           } px-1 md:px-4 xl:px-0 xl:w-[250px]`}
         >
           {menuitems.map((item: NavbarType, index: number) => (
@@ -103,7 +103,7 @@ const NavBar = () => {
   return (
     <nav className={`${isMobile && "border-t-2"}`}>
       <RenderIf value={!isMobile}>
-        <CustomScrollbar height={1000}>
+        <CustomScrollbar height={1000} scrollToTop={false}>
           <Nav props={{ isMobile, pathname, width }} />
         </CustomScrollbar>
       </RenderIf>

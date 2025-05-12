@@ -6,7 +6,7 @@ import Link from "next/link";
 
 import { AvatarFallback, AvatarImage, Avatar } from "./ui/avatar";
 import { Button, buttonVariants } from "./ui/button";
-import { cn } from "@/lib/utils";
+import { cn, partHashtag } from "@/lib/utils";
 import RenderIf from "./RenderIf";
 
 const ProfileCard = ({
@@ -17,7 +17,7 @@ const ProfileCard = ({
   const { isFollowing, onFollow } = props;
   const text: string =
     "Lorem ipsum dolor sit amet consectetur adipisicing adipisicing adipisicing adipisicing adipisicing elit. Eum,  #black consectetur?";
-  const parts: string[] = text.split(/(\#[a-zA-Z0-9_]+)/g);
+  const parts = partHashtag(text);
 
   return (
     <>

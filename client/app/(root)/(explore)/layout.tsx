@@ -18,9 +18,13 @@ const Layout = ({ children }: { children: ReactNode }) => {
         className={`${width <= WIDTH_RESPONSIVE && width >= Viewport.MD ? "px-15" : ""}
           2xl:px-20 lg:px-12 px-6 w-full`}
       >
-        <SearchBar {...SearchBarProps} />
+        <div className="py-3">
+          <div className="sticky">
+            <SearchBar {...SearchBarProps} />
+          </div>
 
-        <ExploreTabs>{children}</ExploreTabs>
+          <ExploreTabs>{children}</ExploreTabs>
+        </div>
       </div>
     </>
   );

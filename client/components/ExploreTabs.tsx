@@ -48,7 +48,7 @@ const ExploreTabs = ({ children }: { children: ReactNode }) => {
 
   return (
     <Fragment>
-      <div className="rounded-[10px] flex flex-col overflow-hidden mt-5">
+      <div className="rounded-[10px] flex flex-col overflow-hidden h-full">
         <nav className="px-1 pt-1 pb-0 border-b">
           <ul className="flex w-full list-none m-0 p-0 font-medium text-sm h-full">
             {tabs.map((item, index) => (
@@ -67,7 +67,7 @@ const ExploreTabs = ({ children }: { children: ReactNode }) => {
                 {item === selectedTab && (
                   <motion.div
                     layoutId="underline"
-                    className="absolute bottom-[-2px] left-0 right-0 h-[2px] bg-blue-400"
+                    className="absolute bottom-[-2px] left-1/2 transform -translate-x-1/2 right-0 h-[4px] rounded-full w-[80%] bg-blue-400"
                   />
                 )}
               </motion.li>
@@ -75,7 +75,7 @@ const ExploreTabs = ({ children }: { children: ReactNode }) => {
           </ul>
         </nav>
 
-        <main className="container">
+        <main className="container h-full">
           <AnimatePresence mode="wait">
             {isLoading ? (
               <Fragment key={selectedTab.label}></Fragment>
@@ -86,6 +86,7 @@ const ExploreTabs = ({ children }: { children: ReactNode }) => {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -10, opacity: 0 }}
                 transition={{ duration: 0.2 }}
+                className="my-2 h-full"
               >
                 {children}
               </motion.div>

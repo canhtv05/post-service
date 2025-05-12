@@ -1,26 +1,48 @@
 "use client";
 
+import CustomScrollbar from "@/components/CustomScrollbar";
+import Loading from "@/components/Loading";
+import RenderIf from "@/components/RenderIf";
 import UserCard from "@/components/UserCard";
+import { useViewport } from "@/hooks";
+import { Fragment, useEffect, useState } from "react";
 
 const Users = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const { height } = useViewport();
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
+  }, []);
+
   return (
-    <div className="pt-5">
-      {new Array(5).fill(null).map((_, index: number) => (
-        <UserCard
-          key={index}
-          props={{
-            src: "https://github.com/shadcn.png",
-            username: "rainraisqaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan",
-            tick: true,
-            creator: true,
-            followers: 1000,
-            bio: "No thingNo thingNo thingNo thingNo thingNo thingNo thingNo thing No thingNo thingNo thingNo thingNo thingNo thingNo thingNo thing",
-            firstName: "Rainwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-            lastName: "Rain",
-          }}
-        />
-      ))}
-    </div>
+    <Fragment>
+      <RenderIf value={loading}>
+        <Loading />
+      </RenderIf>
+      <RenderIf value={!loading}>
+        <CustomScrollbar height={height - 170}>
+          {new Array(20).fill(null).map((_, index: number) => (
+            <UserCard
+              key={index}
+              props={{
+                src: "https://github.com/shadcn.png",
+                username: "Rainrain",
+                tick: true,
+                creator: true,
+                followers: 1000,
+                bio: "Nothing",
+                firstName: "Van",
+                lastName: "Rain",
+              }}
+            />
+          ))}
+        </CustomScrollbar>
+      </RenderIf>
+    </Fragment>
   );
 };
 
