@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, MouseEventHandler } from "react";
+import { Fragment, memo, MouseEventHandler, useMemo } from "react";
 import { Check } from "lucide-react";
 import Link from "next/link";
 
@@ -8,6 +8,8 @@ import { AvatarFallback, AvatarImage, Avatar } from "./ui/avatar";
 import { Button, buttonVariants } from "./ui/button";
 import { cn, partHashtag } from "@/lib/utils";
 import RenderIf from "./RenderIf";
+import Tooltip from "./Tooltip";
+import { SettingsIcon, TickIcon } from "@/assets/icons";
 
 const ProfileCard = ({
   props,
@@ -17,7 +19,9 @@ const ProfileCard = ({
   const { isFollowing, onFollow } = props;
   const text: string =
     "Lorem ipsum dolor sit amet consectetur adipisicing adipisicing adipisicing adipisicing adipisicing elit. Eum,  #black consectetur?";
-  const parts = partHashtag(text);
+  const parts = useMemo(() => partHashtag(text), []);
+  const tick = true;
+  const creator = true;
 
   return (
     <>
@@ -51,7 +55,19 @@ const ProfileCard = ({
       </div>
       <div className="flex flex-col justify-center">
         <Link href={``}>
-          <h3 className="text-14-bold font-black mt-2 line-clamp-1 hover:underline">Rain Rain</h3>
+          <div className="flex">
+            <h3 className="text-14-bold font-black line-clamp-1 hover:underline">Rain Rain</h3>
+            {tick && (
+              <Tooltip content="Famous" arrow color="bg-foreground" classNameTrigger="cursor-pointer">
+                <TickIcon className="ml-1 w-[15px] h-[15px]" />
+              </Tooltip>
+            )}
+            {creator && (
+              <Tooltip content="Creator" arrow color="bg-foreground" classNameTrigger="cursor-pointer">
+                <SettingsIcon className="w-[18px] h-[18px] ml-1 fill-gray-500" />
+              </Tooltip>
+            )}
+          </div>
           <span className="text-14-semibold font-semibold line-clamp-1">@rainrain</span>
         </Link>
       </div>
@@ -87,4 +103,4 @@ const ProfileCard = ({
   );
 };
 
-export default ProfileCard;
+export default memo(ProfileCard);

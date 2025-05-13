@@ -1,11 +1,12 @@
 "use client";
 
+import { Fragment, useEffect, useState } from "react";
+
 import CustomScrollbar from "@/components/CustomScrollbar";
 import Loading from "@/components/Loading";
 import RenderIf from "@/components/RenderIf";
 import UserCard from "@/components/UserCard";
 import { useViewport } from "@/hooks";
-import { Fragment, useEffect, useState } from "react";
 
 const Users = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,6 +38,7 @@ const Users = () => {
                 bio: "Nothing",
                 firstName: "Van",
                 lastName: "Rain",
+                isFollowing: true,
               }}
             />
           ))}

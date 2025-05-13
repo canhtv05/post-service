@@ -8,7 +8,7 @@ import TrendingCard from "@/components/TrendingCard";
 import CustomScrollbar from "@/components/CustomScrollbar";
 import { useViewport } from "@/hooks";
 
-const Page = () => {
+const Trending = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { height } = useViewport();
 
@@ -35,4 +35,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Trending;

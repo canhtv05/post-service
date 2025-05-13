@@ -1,6 +1,7 @@
 "use client";
 
 import { LogOut } from "lucide-react";
+import { memo } from "react";
 
 import { Button } from "./ui/button";
 import { useViewport } from "@/hooks";
@@ -56,4 +57,4 @@ const NavBarAvatar = ({ props }: { props: { src: string; alt?: string; fallback?
   );
 };
 
-export default NavBarAvatar;
+export default memo(NavBarAvatar);

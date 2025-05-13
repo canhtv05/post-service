@@ -1,20 +1,22 @@
-import { NewsCardType } from "@/types";
+import { memo, useMemo } from "react";
 import Link from "next/link";
+import { SettingsIcon } from "lucide-react";
+
+import { NewsCardType } from "@/types";
 import Tooltip from "./Tooltip";
 import { TickIcon } from "@/assets/icons";
-import { SettingsIcon } from "lucide-react";
 import { Badge } from "./ui/badge";
 import RenderIf from "./RenderIf";
 import { partHashtag } from "@/lib/utils";
 
 const NewsCard = ({ props }: { props: NewsCardType }) => {
   const { content, firstName, hashtag, lastName, creator, tick } = props;
-  const parts = partHashtag(hashtag);
+  const parts = useMemo(() => partHashtag(hashtag), [hashtag]);
 
   return (
-    <Link href={`/search?=${"ok"}`}>
-      <div className="flex py-3 hover:bg-primary/10 rounded-lg px-2 transition-colors duration-200 cursor-pointer overflow-hidden">
-        <div className="flex flex-col px-4 min-w-0 w-full">
+    <Link href={`/`}>
+      <div className="flex py-3 hover:bg-primary/10 rounded-lg transition-colors duration-200 cursor-pointer overflow-hidden">
+        <div className="flex flex-col px-2 min-w-0 w-full">
           <div className="flex items-center w-full justify-between">
             <span className="font-black lg:text-[16px] md:text-[14px] text-[12px] flex items-center min-w-0">
               <span className="truncate max-w-[110px] sm:max-w-[150px] md:max-w-[300px]">{`${firstName} ${lastName}`}</span>
@@ -29,7 +31,9 @@ const NewsCard = ({ props }: { props: NewsCardType }) => {
                 </Tooltip>
               )}
             </span>
-            <span className="font-black text-[12px] text-foreground/50 flex items-center min-w-0">Recently</span>
+            <span className="font-black text-[12px] text-foreground/50 flex items-center min-w-0">
+              <Badge variant={"time"}>1s</Badge>
+            </span>
           </div>
           <div className="min-w-0 max-w-[110px] sm:max-w-[150px] md:max-w-[300px]">
             <span className="text-start leading-4 md:leading-5 lg:text-[14px] md:text-[12px] text-[10px] text-foreground truncate block">
@@ -51,4 +55,4 @@ const NewsCard = ({ props }: { props: NewsCardType }) => {
   );
 };
 
-export default NewsCard;
+export default memo(NewsCard);

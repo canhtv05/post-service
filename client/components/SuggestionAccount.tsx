@@ -1,7 +1,8 @@
 "use client";
 
-import { MouseEventHandler } from "react";
+import { memo, MouseEventHandler } from "react";
 import { Check } from "lucide-react";
+
 import Account from "./Account";
 import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
@@ -43,4 +44,4 @@ const SuggestionAccount = ({
   );
 };
 
-export default SuggestionAccount;
+export default memo(SuggestionAccount);

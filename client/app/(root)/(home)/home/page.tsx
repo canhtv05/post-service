@@ -1,5 +1,5 @@
 "use client";
 
 export default function Home() {
-  return <div className="w-full bg-emerald-500 h-screen mb-2">Hello</div>;
+  return <div className="w-full bg-emerald-500 mb-2 h-screen">Hello</div>;
 }

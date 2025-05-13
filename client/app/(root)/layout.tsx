@@ -37,7 +37,7 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
             repeat: Infinity,
           }}
         >
-          <Image src="/imgs/logo.png" width={100} height={100} alt="logo" className="rounded-2xl" />
+          <Image src="/imgs/logo.png" width={100} height={100} alt="logo" className="rounded-2xl" priority />
         </motion.div>
       </div>
     );
@@ -50,9 +50,12 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
       } font-chirp text-foreground bg-background flex md:w-[95%] w-full mx-auto h-screen relative`}
     >
       <RenderIf value={isMobile}>
-        {children}
-        {/* navbar bi children de len */}
-        <NavBar />
+        <div className="relative w-full h-full">
+          <div className="absolute z-10 w-full">{children}</div>
+          <div className="absolute h-[52px] z-20 bottom-0 bg-background w-full">
+            <NavBar />
+          </div>
+        </div>
       </RenderIf>
       <RenderIf value={!isMobile}>
         <div className="fixed">

@@ -3,13 +3,14 @@
 import { CirclePlus } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Fragment } from "react";
 
 import { menuitems, NavbarType } from "@/types/NavbarType";
 import { Button, buttonVariants } from "./ui/button";
 import { cn } from "@/lib/utils";
 import Tooltip from "./Tooltip";
 import RenderIf from "./RenderIf";
-import { Viewport } from "@/enums";
+import { TypePageTabs, Viewport } from "@/enums";
 import NavBarAvatar from "./NavBarAvatar";
 import { useMobile, useViewport } from "@/hooks";
 import CustomScrollbar from "./CustomScrollbar";
@@ -41,27 +42,32 @@ const Nav = ({ props }: { props: { isMobile: boolean; width: number; pathname: s
             isMobile ? "flex-row justify-around my-0 fixed bottom-0 w-full border-t" : "flex-col my-2"
           } px-1 md:px-4 xl:px-0 xl:w-[250px]`}
         >
-          {menuitems.map((item: NavbarType, index: number) => (
-            <li key={index} className="my-1">
-              <div className="flex items-center">
-                <Link href={item.link}>
-                  <RenderIf value={width <= Viewport["XL"]}>
-                    <RenderIf value={!isMobile}>
-                      <Tooltip content={item.title} side="bottom" delayDuration={DELAY_DURATION}>
-                        <ButtonNavBar item={item} active={pathname.includes(item.link)} />
-                      </Tooltip>
+          {menuitems.map((item: NavbarType, index: number) => {
+            let active = pathname.includes(item.link);
+            if (pathname.includes(TypePageTabs.SEARCH) && item.link === `/${TypePageTabs.EXPLORE}`) active = true;
+
+            return (
+              <li key={index} className="my-1">
+                <div className="flex items-center">
+                  <Link href={item.link}>
+                    <RenderIf value={width <= Viewport["XL"]}>
+                      <RenderIf value={!isMobile}>
+                        <Tooltip content={item.title} side="bottom" delayDuration={DELAY_DURATION}>
+                          <ButtonNavBar item={item} active={active} />
+                        </Tooltip>
+                      </RenderIf>
+                      <RenderIf value={isMobile}>
+                        <ButtonNavBar item={item} active={active} />
+                      </RenderIf>
                     </RenderIf>
-                    <RenderIf value={isMobile}>
-                      <ButtonNavBar item={item} active={pathname.includes(item.link)} />
+                    <RenderIf value={width > Viewport["XL"]}>
+                      <ButtonNavBar item={item} active={active} />
                     </RenderIf>
-                  </RenderIf>
-                  <RenderIf value={width > Viewport["XL"]}>
-                    <ButtonNavBar item={item} active={pathname.includes(item.link)} />
-                  </RenderIf>
-                </Link>
-              </div>
-            </li>
-          ))}
+                  </Link>
+                </div>
+              </li>
+            );
+          })}
         </ul>
         <RenderIf value={!isMobile}>
           <div className={`${width > Viewport.MD ? "w-full" : ""} md:px-3 flex justify-center xl:px-0 mb-2`}>
@@ -101,7 +107,7 @@ const NavBar = () => {
   const isMobile = useMobile();
 
   return (
-    <nav className={`${isMobile && "border-t-2"}`}>
+    <Fragment>
       <RenderIf value={!isMobile}>
         <CustomScrollbar height={1000} scrollToTop={false}>
           <Nav props={{ isMobile, pathname, width }} />
@@ -110,7 +116,7 @@ const NavBar = () => {
       <RenderIf value={isMobile}>
         <Nav props={{ isMobile, pathname, width }} />
       </RenderIf>
-    </nav>
+    </Fragment>
   );
 };
 

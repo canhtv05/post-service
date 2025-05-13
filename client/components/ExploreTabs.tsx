@@ -1,23 +1,19 @@
 "use client";
 
-import { Fragment, ReactNode, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { useRouter, usePathname } from "next/navigation";
+import { Fragment, memo, ReactNode, useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
-const allIngredients = [
-  { label: "Users", link: "users" },
-  { label: "Trending", link: "trending" },
-  { label: "News", link: "news" },
-];
+import { TabType } from "@/types";
+import { TypePageTabs } from "@/enums";
 
-const [tomato, lettuce, cheese] = allIngredients;
-const tabs = [tomato, lettuce, cheese];
-
-const ExploreTabs = ({ children }: { children: ReactNode }) => {
+const ExploreTabs = ({ children, tabs }: { children: ReactNode; tabs: TabType[] }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const param = searchParams.get("q");
+
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
   const [targetPath, setTargetPath] = useState<string | null>(null);
   const selectedTab = tabs[selectedTabIndex];
 
@@ -27,19 +23,30 @@ const ExploreTabs = ({ children }: { children: ReactNode }) => {
       const index = tabs.indexOf(currentTab);
       setSelectedTabIndex(index);
     }
-  }, [pathname]);
+  }, [pathname, tabs]);
 
   useEffect(() => {
     if (targetPath && pathname === targetPath) {
-      setIsLoading(false);
       setTargetPath(null);
     }
   }, [pathname, targetPath]);
 
-  const handleTabClick = (index: number, link: string) => {
-    const newPath = `/explore/tabs/${link}`;
+  const handleTabClick = (index: number, item: TabType) => {
+    const { link, type } = item;
+
+    let newPath = "";
+    switch (type) {
+      case TypePageTabs.SEARCH: {
+        newPath = `/search?q=${param}&type=${link}`;
+        break;
+      }
+      case TypePageTabs.EXPLORE: {
+        newPath = `/${type}/tabs/${link}`;
+        break;
+      }
+    }
+
     if (pathname !== newPath) {
-      setIsLoading(true);
       setTargetPath(newPath);
       setSelectedTabIndex(index);
       router.push(newPath, { scroll: false });
@@ -48,7 +55,7 @@ const ExploreTabs = ({ children }: { children: ReactNode }) => {
 
   return (
     <Fragment>
-      <div className="rounded-[10px] flex flex-col overflow-hidden h-full">
+      <div className="rounded-[10px] flex flex-col overflow-hidden h-full py-3">
         <nav className="px-1 pt-1 pb-0 border-b">
           <ul className="flex w-full list-none m-0 p-0 font-medium text-sm h-full">
             {tabs.map((item, index) => (
@@ -56,7 +63,7 @@ const ExploreTabs = ({ children }: { children: ReactNode }) => {
                 key={item.label}
                 initial={false}
                 className="h-full relative flex-1 min-w-0 cursor-pointer select-none px-4 py-2 flex items-center justify-between"
-                onClick={() => handleTabClick(index, item.link)}
+                onClick={() => handleTabClick(index, item)}
               >
                 <span className="text-14-bold text-center w-full">{item.label}</span>
 
@@ -75,27 +82,10 @@ const ExploreTabs = ({ children }: { children: ReactNode }) => {
           </ul>
         </nav>
 
-        <main className="container h-full">
-          <AnimatePresence mode="wait">
-            {isLoading ? (
-              <Fragment key={selectedTab.label}></Fragment>
-            ) : (
-              <motion.div
-                key={selectedTab.label}
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -10, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="my-2 h-full"
-              >
-                {children}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </main>
+        <main className="container h-full">{children}</main>
       </div>
     </Fragment>
   );
 };
 
-export default ExploreTabs;
+export default memo(ExploreTabs);

@@ -1,14 +1,16 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 import { useClickOutside } from "@/hooks";
 
-export const useSearchBar = () => {
+export const useSearchBar = (q: string, resetQuery: boolean = false) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const typeTab = searchParams.get("type") || "users";
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(q);
   const [isShowSearchCard, setIsShowSearchCard] = useState(false);
 
   const ref = useClickOutside(() => setIsShowSearchCard(false));
@@ -24,9 +26,12 @@ export const useSearchBar = () => {
   };
 
   const handleSearch = (e: KeyboardEvent<HTMLInputElement>) => {
+    const q = query.trim();
+    if (q.length === 0) return;
     if (e.key === "Enter") {
-      setQuery("");
-      router.push(`${query}`);
+      setIsShowSearchCard(false);
+      if (resetQuery) setQuery("");
+      router.push(`/search?q=${q}&type=${typeTab}`);
     }
   };
 

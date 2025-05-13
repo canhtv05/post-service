@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, memo } from "react";
+
 import ScrollToTop from "./ScrollToTop";
 import RenderIf from "./RenderIf";
 
@@ -144,10 +145,7 @@ const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ children, scrollToTop
 
   return (
     <div ref={containerRef} className="relative w-full" style={{ height }}>
-      <div
-        ref={contentRef}
-        className="h-full overflow-y-scroll focus:outline-none [&::-webkit-scrollbar]:hidden scrollbar-hide"
-      >
+      <div ref={contentRef} className="h-full overflow-y-scroll focus:outline-none [&::-webkit-scrollbar]:hidden">
         {children}
       </div>
       <div className="absolute right-0 top-0 w-2 h-full bg-transparent">
@@ -166,4 +164,4 @@ const CustomScrollbar: React.FC<CustomScrollbarProps> = ({ children, scrollToTop
   );
 };
 
-export default CustomScrollbar;
+export default memo(CustomScrollbar);

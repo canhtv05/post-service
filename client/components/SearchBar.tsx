@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, memo } from "react";
 import { CircleX, SearchIcon } from "lucide-react";
 import { AnimatePresence } from "framer-motion";
 
@@ -13,7 +13,7 @@ const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
   ({ query, setQuery, handleSearchCard, handleFocus, handleSearch, isShowSearchCard }: SearchBarProps, ref) => {
     return (
       <div className="relative flex items-center border focus-within:ring-1 focus-within:ring-ring pl-2 rounded-full bg-transparent">
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 z-50">
           <SearchIcon className="size-5 text-muted-foreground" />
         </div>
         <Input
@@ -39,4 +39,4 @@ const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
 
 SearchBar.displayName = "SearchBar";
 
-export default SearchBar;
+export default memo(SearchBar);

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { memo } from "react";
 
 import { SettingsIcon, TickIcon } from "@/assets/icons";
 import { Avatar as AvatarContainer, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -44,13 +45,14 @@ const AvatarAccount = ({ props, data }: { props: AvatarPropsType; data: AvatarDa
   const tooltip: boolean = !!render;
 
   return (
-    <>
+    <div className="flex items-center w-full justify-start">
       <RenderIf value={withLink}>
-        <Link href={`@${username}`}>
+        <Link href={`@${username}`} className="w-full flex">
           <AvatarContainer className="size-[40px]">
             <AvatarImage src={src} alt={alt || "avatar"} />
             <AvatarFallback>{fallback || "AV"}</AvatarFallback>
           </AvatarContainer>
+          <AccountInfo creator={creator} tick={tick} tooltip={tooltip} />
         </Link>
       </RenderIf>
       <RenderIf value={!withLink}>
@@ -58,16 +60,9 @@ const AvatarAccount = ({ props, data }: { props: AvatarPropsType; data: AvatarDa
           <AvatarImage src={src} alt={alt || "avatar"} />
           <AvatarFallback>{fallback || "AV"}</AvatarFallback>
         </AvatarContainer>
-      </RenderIf>
-      <RenderIf value={withLink}>
-        <Link href={`@${username}`}>
-          <AccountInfo creator={creator} tick={tick} tooltip={tooltip} />
-        </Link>
-      </RenderIf>
-      <RenderIf value={!withLink}>
         <AccountInfo creator={creator} tick={tick} tooltip={tooltip} />
       </RenderIf>
-    </>
+    </div>
   );
 };
 
@@ -99,4 +94,4 @@ const Account = ({ props, data }: { props: AvatarPropsType; data: AvatarDataType
   );
 };
 
-export default Account;
+export default memo(Account);

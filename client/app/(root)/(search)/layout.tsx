@@ -1,18 +1,20 @@
 "use client";
 
 import { ReactNode } from "react";
+import { useSearchParams } from "next/navigation";
 
 import ExploreTabs from "@/components/ExploreTabs";
 import SearchBar from "@/components/SearchBar";
-import { tabsExplore, WIDTH_RESPONSIVE } from "@/constants";
+import { tabsSearch, WIDTH_RESPONSIVE } from "@/constants";
 import { Viewport } from "@/enums";
 import { useSearchBar, useViewport } from "@/hooks";
 import { SearchBarProps } from "@/types";
 
 const Layout = ({ children }: { children: ReactNode }) => {
   const { width } = useViewport();
-
-  const SearchBarProps: SearchBarProps = useSearchBar("");
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q") || "";
+  const SearchBarProps: SearchBarProps = useSearchBar(query);
 
   return (
     <>
@@ -25,7 +27,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
             <SearchBar {...SearchBarProps} />
           </div>
 
-          <ExploreTabs tabs={tabsExplore}>{children}</ExploreTabs>
+          <ExploreTabs tabs={tabsSearch}>{children}</ExploreTabs>
         </div>
       </div>
     </>

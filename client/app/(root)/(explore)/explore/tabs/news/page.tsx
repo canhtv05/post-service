@@ -1,11 +1,12 @@
 "use client";
 
+import { Fragment, useEffect, useState } from "react";
+
 import CustomScrollbar from "@/components/CustomScrollbar";
 import Loading from "@/components/Loading";
 import NewsCard from "@/components/NewsCard";
 import RenderIf from "@/components/RenderIf";
 import { useViewport } from "@/hooks";
-import React, { Fragment, useEffect, useState } from "react";
 
 const Page = () => {
   const [loading, setLoading] = useState<boolean>(false);

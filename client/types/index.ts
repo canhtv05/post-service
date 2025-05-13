@@ -34,6 +34,8 @@ export type UserCardType = {
   firstName: string;
   lastName: string;
   followers: number;
+  isFollowing?: boolean;
+  onFollow?: () => void;
 };
 
 export type NewsCardType = {
@@ -43,6 +45,12 @@ export type NewsCardType = {
   lastName: string;
   content: string;
   hashtag: string;
+};
+
+export type TabType = {
+  label: string;
+  link: string;
+  type: string;
 };
 
 export type Side = "top" | "right" | "bottom" | "left";

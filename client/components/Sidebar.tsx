@@ -15,7 +15,7 @@ type List = { id: number; isFollowing: boolean }[];
 const Sidebar = () => {
   const pathname: string = usePathname();
   const { width } = useViewport();
-  const searchBarProps = useSearchBar();
+  const searchBarProps = useSearchBar("", true);
 
   const [list, setList] = useState<List>([
     { id: 1, isFollowing: true },
@@ -29,11 +29,15 @@ const Sidebar = () => {
 
   return (
     <div className="my-2 ml-6 flex-1 w-full">
-      <RenderIf value={!!!pathname.includes("/explore")}>
+      <RenderIf value={!!!pathname.includes("/explore") && !!!pathname.includes("/search")}>
         <SearchBar {...searchBarProps} />
       </RenderIf>
 
-      <Card className={`bg-background ${!!pathname.includes("/explore") ? "mt-0" : "mt-6"}`}>
+      <Card
+        className={`bg-background ${
+          !!pathname.includes("/explore") || !!pathname.includes("/search") ? "mt-0" : "mt-6"
+        }`}
+      >
         <CardHeader>
           <CardTitle className="xl:text-[20px] text-[16px] font-bold">Suggested accounts</CardTitle>
         </CardHeader>
