@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { memo } from "react";
-
 import { SettingsIcon, TickIcon } from "@/assets/icons";
 import { Avatar as AvatarContainer, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AvatarDataType, AvatarPropsType } from "@/types";
@@ -14,13 +13,13 @@ const AccountInfo = ({ tooltip, creator, tick }: { tooltip?: boolean; creator?: 
   return (
     <div className="flex flex-col justify-around ml-2 items-start">
       <div className="flex items-center w-full">
-        <span
+        <h2
           className={`text-[13px] max-w-[80px] truncate font-black text-left w-full ${
             tooltip ? "hover:underline" : ""
           }`}
         >
           Rain rain
-        </span>
+        </h2>
         {tick && (
           <Tooltip content="Famous" arrow color="bg-foreground" classNameTrigger="cursor-pointer">
             <TickIcon className="ml-1 w-[15px] h-[15px]" />
@@ -32,37 +31,35 @@ const AccountInfo = ({ tooltip, creator, tick }: { tooltip?: boolean; creator?: 
           </Tooltip>
         )}
       </div>
-      <span className="w-full text-[13px] font-semibold text-foreground/50 text-left truncate max-w-[80px]">
-        @rainrain
-      </span>
+      <p className="w-full text-[13px] font-semibold text-foreground/50 text-left truncate max-w-[80px]">@rainrain</p>
     </div>
   );
 };
 
 const AvatarAccount = ({ props, data }: { props: AvatarPropsType; data: AvatarDataType }) => {
-  const { src, alt, fallback, creator, tick, render, withLink = true } = props;
+  const { src, alt, fallback, creator, tick, render, withLink = true, isSearch } = props;
   const { username } = data;
   const tooltip: boolean = !!render;
 
+  const content = (
+    <>
+      <AvatarContainer className="size-[40px]">
+        <AvatarImage src={src} alt={alt || "avatar"} />
+        <AvatarFallback>{fallback || "AV"}</AvatarFallback>
+      </AvatarContainer>
+      <AccountInfo creator={creator} tick={tick} tooltip={tooltip} />
+    </>
+  );
+
   return (
-    <div className="flex items-center w-full justify-start">
+    <article className="flex items-center w-full justify-start" itemScope itemType="https://schema.org/Person">
       <RenderIf value={withLink}>
-        <Link href={`@${username}`} className="w-full flex">
-          <AvatarContainer className="size-[40px]">
-            <AvatarImage src={src} alt={alt || "avatar"} />
-            <AvatarFallback>{fallback || "AV"}</AvatarFallback>
-          </AvatarContainer>
-          <AccountInfo creator={creator} tick={tick} tooltip={tooltip} />
+        <Link href={`/@${username}`} className={`w-full flex ${isSearch ? "py-2 px-6" : ""}`} itemProp="url">
+          {content}
         </Link>
       </RenderIf>
-      <RenderIf value={!withLink}>
-        <AvatarContainer className="size-[40px]">
-          <AvatarImage src={src} alt={alt || "avatar"} />
-          <AvatarFallback>{fallback || "AV"}</AvatarFallback>
-        </AvatarContainer>
-        <AccountInfo creator={creator} tick={tick} tooltip={tooltip} />
-      </RenderIf>
-    </div>
+      <RenderIf value={!withLink}>{content}</RenderIf>
+    </article>
   );
 };
 
@@ -72,12 +69,12 @@ const Account = ({ props, data }: { props: AvatarPropsType; data: AvatarDataType
   return (
     <>
       <RenderIf value={!tooltip}>
-        <div className="flex">
+        <section className="flex">
           <AvatarAccount props={{ ...props }} data={{ ...data }} />
-        </div>
+        </section>
       </RenderIf>
       <RenderIf value={tooltip}>
-        <div className="flex cursor-pointer">
+        <section className="flex cursor-pointer">
           <HoverCard>
             <HoverCardTrigger asChild>
               <div className="flex justify-center items-center">
@@ -88,7 +85,7 @@ const Account = ({ props, data }: { props: AvatarPropsType; data: AvatarDataType
               {props.render}
             </HoverCardContent>
           </HoverCard>
-        </div>
+        </section>
       </RenderIf>
     </>
   );

@@ -28,18 +28,22 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="my-2 ml-6 flex-1 w-full">
+    <div className="my-2 ml-6 flex-1 w-full" role="complementary">
       <RenderIf value={!!!pathname.includes("/explore") && !!!pathname.includes("/search")}>
-        <SearchBar {...searchBarProps} />
+        <SearchBar {...searchBarProps} aria-label="Search for accounts, posts or hashtags" />
       </RenderIf>
 
       <Card
         className={`bg-background ${
           !!pathname.includes("/explore") || !!pathname.includes("/search") ? "mt-0" : "mt-6"
         }`}
+        role="region"
+        aria-labelledby="suggested-accounts"
       >
         <CardHeader>
-          <CardTitle className="xl:text-[20px] text-[16px] font-bold">Suggested accounts</CardTitle>
+          <CardTitle id="suggested-accounts" className="xl:text-[20px] text-[16px] font-bold">
+            Suggested accounts
+          </CardTitle>
         </CardHeader>
         <CardContent className={`${width <= 1090 ? "px-3" : "px-6"}`}>
           {list.map((item, index) => (
@@ -47,18 +51,19 @@ const Sidebar = () => {
               key={index}
               isFollowing={item.isFollowing}
               onFollow={() => handleToggleFollow(item.id)}
+              aria-label={`Follow user ${index + 1}`}
             />
           ))}
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button asChild variant={"profile"}>
+          <Button asChild variant={"profile"} aria-label="See more suggested accounts">
             <span className="text-14-bold">See more</span>
           </Button>
         </CardFooter>
       </Card>
 
       <div className="py-2 text-center flex justify-center items-end">
-        <span className="text-12-semibold">Make by canhtv05 with ❤️</span>
+        <span className="text-12-semibold">Made by canhtv05 with ❤️</span>
         <span className="mx-2"></span>
         <span className="text-12-semibold">8/2025</span>
       </div>

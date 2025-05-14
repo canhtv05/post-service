@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 import { motion } from "framer-motion";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import Account from "./Account";
-import { Button } from "./ui/button";
 import { memo } from "react";
 
 const SearchCard = ({ query }: { query: string }) => {
@@ -24,12 +24,13 @@ const SearchCard = ({ query }: { query: string }) => {
         <Card className="shadow-lg">
           <CardContent className="px-0">
             {new Array(5).fill(null).map((_, index: number) => (
-              <div key={index} className="py-2 hover:bg-primary/10 px-6 transition-colors duration-200 cursor-pointer">
+              <div key={index} className="hover:bg-primary/10 transition-colors duration-200 cursor-pointer">
                 <Account
                   props={{
                     src: "https://github.com/shadcn.png",
                     creator: true,
                     tick: true,
+                    isSearch: true,
                   }}
                   data={{
                     username: "rainrain",

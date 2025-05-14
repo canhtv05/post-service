@@ -2,7 +2,6 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 import NavBar from "@/components/NavBar";
 import { useMobile, useViewport } from "@/hooks";
@@ -28,17 +27,9 @@ const Layout = ({ children }: Readonly<{ children: ReactNode }>) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen font-chirp text-lg">
-        <motion.div
-          animate={{
-            rotate: [0, 10, -10, 10, 0],
-          }}
-          transition={{
-            duration: 1,
-            repeat: Infinity,
-          }}
-        >
+        <div className="animate-rotate">
           <Image src="/imgs/logo.png" width={100} height={100} alt="logo" className="rounded-2xl" priority />
-        </motion.div>
+        </div>
       </div>
     );
   }

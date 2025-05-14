@@ -16,7 +16,7 @@ const SuggestionAccount = ({
   onFollow: MouseEventHandler<HTMLButtonElement>;
 }) => {
   return (
-    <div className="my-4 flex justify-between items-center">
+    <div className="my-4 flex justify-between items-center" role="listitem">
       <Account
         props={{
           src: "https://github.com/shadcn.png",
@@ -25,6 +25,7 @@ const SuggestionAccount = ({
           render: <ProfileCard props={{ isFollowing, onFollow }} />,
         }}
         data={{ username: "rainrain" }}
+        aria-labelledby="account-info"
       />
       <Button
         asChild
@@ -32,6 +33,7 @@ const SuggestionAccount = ({
           isFollowing ? `${cn(buttonVariants({ variant: "outline" }))} text-foreground` : "border"
         } !rounded-full`}
         onClick={onFollow}
+        aria-label={isFollowing ? "Unfollow this account" : "Follow this account"}
       >
         <div>
           <div

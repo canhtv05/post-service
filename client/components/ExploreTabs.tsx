@@ -12,18 +12,23 @@ const ExploreTabs = ({ children, tabs }: { children: ReactNode; tabs: TabType[] 
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const param = searchParams.get("q");
+  const type = searchParams.get("type");
 
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [targetPath, setTargetPath] = useState<string | null>(null);
   const selectedTab = tabs[selectedTabIndex];
 
   useEffect(() => {
-    const currentTab = tabs.find((tab) => pathname.endsWith(tab.link));
+    const currentTab = tabs.find((tab) => {
+      let res = pathname.endsWith(tab.link);
+      if (!res && tab.link === type) res = true;
+      return res;
+    });
     if (currentTab) {
       const index = tabs.indexOf(currentTab);
       setSelectedTabIndex(index);
     }
-  }, [pathname, tabs]);
+  }, [param, pathname, tabs, type]);
 
   useEffect(() => {
     if (targetPath && pathname === targetPath) {

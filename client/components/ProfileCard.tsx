@@ -24,39 +24,40 @@ const ProfileCard = ({
   const creator = true;
 
   return (
-    <>
-      <div className="flex justify-between space-x-4">
-        <Link href={``}>
-          <Avatar className="size-[54px]">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>AV</AvatarFallback>
-          </Avatar>
-        </Link>
-        <div className="space-y-1">
-          <div className="flex justify-end">
-            <Button
-              asChild
-              className={`${
-                isFollowing ? `${cn(buttonVariants({ variant: "outline" }))} text-foreground` : "border"
-              } !rounded-full`}
-              onClick={onFollow}
-            >
-              <div>
-                <div
-                  className={`2xl:text-[14px] text-[12px] font-black ${
-                    isFollowing ? "text-foreground" : "!text-background"
-                  }`}
-                >{`${isFollowing ? "Following" : "Follow"}`}</div>
-                {isFollowing && <Check className="size-3" />}
-              </div>
-            </Button>
-          </div>
+    <section aria-labelledby="profile-card" className="flex justify-between space-x-4" role="region">
+      <Link href={``}>
+        <Avatar className="size-[54px]" aria-label="User Avatar">
+          <AvatarImage src="https://github.com/shadcn.png" alt="User Avatar" />
+          <AvatarFallback>AV</AvatarFallback>
+        </Avatar>
+      </Link>
+      <div className="space-y-1">
+        <div className="flex justify-end">
+          <Button
+            asChild
+            className={`${
+              isFollowing ? `${cn(buttonVariants({ variant: "outline" }))} text-foreground` : "border"
+            } !rounded-full`}
+            onClick={onFollow}
+            aria-pressed={isFollowing ? "true" : "false"}
+          >
+            <div>
+              <div
+                className={`2xl:text-[14px] text-[12px] font-black ${
+                  isFollowing ? "text-foreground" : "!text-background"
+                }`}
+              >{`${isFollowing ? "Following" : "Follow"}`}</div>
+              {isFollowing && <Check className="size-3" />}
+            </div>
+          </Button>
         </div>
       </div>
       <div className="flex flex-col justify-center">
         <Link href={``}>
           <div className="flex">
-            <h3 className="text-14-bold font-black line-clamp-1 hover:underline">Rain Rain</h3>
+            <h3 className="text-14-bold font-black line-clamp-1 hover:underline" id="profile-card">
+              Rain Rain
+            </h3>
             {tick && (
               <Tooltip content="Famous" arrow color="bg-foreground" classNameTrigger="cursor-pointer">
                 <TickIcon className="ml-1 w-[15px] h-[15px]" />
@@ -99,7 +100,7 @@ const ProfileCard = ({
           <span className="ml-1 text-14-semibold">Followers</span>
         </div>
       </div>
-    </>
+    </section>
   );
 };
 

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -76,10 +77,6 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-body {
-  font-family: var(--font-chirp);
-}
-
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -154,7 +151,11 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground box-border font-chirp;
+  }
+
+  img {
+    @apply rounded-sm object-cover;
   }
 }
 
@@ -194,4 +195,26 @@ body {
   .text-10-semibold {
     @apply text-[10px] font-semibold;
   }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-rotate {
+  animation: rotate 1s ease-in-out infinite;
 }

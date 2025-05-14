@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { use } from "react";
 
 import Users from "./users/page";
@@ -19,7 +18,7 @@ const Search = ({ searchParams }: { searchParams: Promise<{ q: string; type: str
       <RenderIf value={type === TypeTabs.POSTS}>
         <Posts />
       </RenderIf>
-      <RenderIf value={type !== TypeTabs.POSTS && type !== TypeTabs.USERS}>
+      <RenderIf value={type !== TypeTabs.USERS && type !== TypeTabs.POSTS}>
         {/* default page */}
         <Users />
       </RenderIf>

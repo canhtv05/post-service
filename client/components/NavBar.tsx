@@ -35,7 +35,11 @@ const Nav = ({ props }: { props: { isMobile: boolean; width: number; pathname: s
   const { isMobile, pathname, width } = props;
 
   return (
-    <div className={`${!isMobile ? "h-screen" : ""} flex flex-col justify-around`}>
+    <nav
+      role="navigation"
+      aria-label="Main navigation"
+      className={`${!isMobile ? "h-screen" : ""} flex flex-col justify-around`}
+    >
       <div className="xl:pr-8 pr-0">
         <ul
           className={`flex ${
@@ -97,7 +101,7 @@ const Nav = ({ props }: { props: { isMobile: boolean; width: number; pathname: s
           <NavBarAvatar props={{ src: "https://github.com/shadcn.png" }} />
         </div>
       </RenderIf>
-    </div>
+    </nav>
   );
 };
 

@@ -8,6 +8,7 @@ export type AvatarPropsType = {
   creator?: boolean;
   render?: ReactNode;
   withLink?: boolean;
+  isSearch?: boolean;
 };
 
 export type AvatarDataType = {
@@ -45,6 +46,24 @@ export type NewsCardType = {
   lastName: string;
   content: string;
   hashtag: string;
+};
+
+export type PostCardType = {
+  alt?: string;
+  src: string;
+  fallback?: string;
+  tick?: boolean;
+  creator?: boolean;
+  firstName: string;
+  lastName: string;
+  username: string;
+  bio: string;
+  content: string;
+  hashtag: string;
+  followers: number;
+  isFollowing?: boolean;
+  onFollow?: () => void;
+  images?: string[];
 };
 
 export type TabType = {

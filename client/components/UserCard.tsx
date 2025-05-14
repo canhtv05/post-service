@@ -15,18 +15,25 @@ const UserCard = ({ props }: { props: UserCardType }) => {
   const { src, alt, bio, creator, fallback, firstName, lastName, tick, username, followers, isFollowing, onFollow } =
     props;
   return (
-    <div className="flex justify-between items-center  py-3 hover:bg-primary/10 rounded-lg px-2 transition-colors duration-200 cursor-pointer overflow-hidden">
-      <Link href={`/@${username}`} className="flex-1">
+    <article
+      aria-labelledby="user-card"
+      className="flex justify-between items-center py-3 hover:bg-primary/10 rounded-lg px-2 transition-colors duration-200 cursor-pointer overflow-hidden"
+      role="region"
+    >
+      <Link href={`/@${username}`} className="flex-1" aria-label={`Profile of ${firstName} ${lastName}`}>
         <div className="flex">
           <div className="flex items-center">
-            <AvatarContainer className="lg:size-[55px] md:size-[50px] size-[40px]">
-              <AvatarImage src={src} alt={alt || "avatar"} />
+            <AvatarContainer className="lg:size-[55px] md:size-[50px] size-[40px]" aria-label="User Avatar">
+              <AvatarImage src={src} alt={alt || "User Avatar"} />
               <AvatarFallback>{fallback || "AV"}</AvatarFallback>
             </AvatarContainer>
           </div>
           <div className="flex flex-col px-2 min-w-0 w-full">
             <div className="flex items-center w-full">
-              <span className="font-black lg:text-[16px] md:text-[14px] text-[12px] flex items-center min-w-0">
+              <h2
+                className="font-black lg:text-[16px] md:text-[14px] text-[12px] flex items-center min-w-0"
+                id="user-card"
+              >
                 <span className="truncate max-w-[110px] sm:max-w-[150px] md:max-w-[300px]">{`${firstName} ${lastName}`}</span>
                 {tick && (
                   <Tooltip content="Famous" arrow color="bg-foreground" classNameTrigger="cursor-pointer">
@@ -38,7 +45,7 @@ const UserCard = ({ props }: { props: UserCardType }) => {
                     <SettingsIcon className="md:w-[18px] md:h-[18px] w-[16px] h-[16px] ml-1 fill-gray-500" />
                   </Tooltip>
                 )}
-              </span>
+              </h2>
             </div>
             <div className="flex items-center text-start leading-4 md:leading-5 lg:text-[16px] md:text-[14px] text-[12px] text-foreground/70 min-w-0">
               <span className="truncate max-w-[110px] sm:max-w-[150px] md:max-w-[300px]">{username}</span>
@@ -63,6 +70,7 @@ const UserCard = ({ props }: { props: UserCardType }) => {
             isFollowing ? `${cn(buttonVariants({ variant: "outline" }))} text-foreground` : "border"
           } !rounded-full`}
           onClick={onFollow}
+          aria-pressed={isFollowing ? "true" : "false"}
         >
           <div>
             <div
@@ -74,7 +82,7 @@ const UserCard = ({ props }: { props: UserCardType }) => {
           </div>
         </Button>
       </div>
-    </div>
+    </article>
   );
 };
 
